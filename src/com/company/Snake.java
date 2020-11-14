@@ -10,10 +10,51 @@ public class Snake implements KeyListener{
 
     private int lunghezza = 4;
     private Direzioni direzione = Direzioni.STOP;
-    public ArrayList<Point> corpo = new ArrayList<Point>();
+    private ArrayList<Point> corpo = new ArrayList<Point>();
 
-    public void mossa(){
+    public Snake(){
+        corpo.add(new Point(Campo.getWidth()/2, Campo.getHeight()/2));
+        corpo.add(new Point(Campo.getWidth()/2 - 1, Campo.getHeight()/2));
+        corpo.add(new Point(Campo.getWidth()/2 - 2, Campo.getHeight()/2));
+        corpo.add(new Point(Campo.getWidth()/2 - 3, Campo.getHeight()/2));
+    }
 
+    /**
+     * aggiorna la lista con il corpo
+     */
+    public void mossa(int newX, int newY){
+        corpo.remove(lunghezza - 1);
+        corpo.add(0, new Point(newX, newY));
+    }
+
+
+    /**
+     * aggiunge un elemento in testa all'arraylistin poszione x, y
+     */
+    public void cresci(int x, int y) {
+        corpo.add(0, new Point(x, y));
+        lunghezza++;
+    }
+
+
+    /**
+     * restituisce l'elemento della lista in  posizione id
+     * @param id
+     * @return
+     */
+    public Point getElementById(int id){
+        Point p = new Point();
+        p.x = corpo.get(id).x;
+        p.y = corpo.get(id).y;
+        return p;
+    }
+
+    public int getLunghezza(){
+        return lunghezza;
+    }
+
+    public Direzioni getDirezione() {
+        return direzione;
     }
 
     @Override
@@ -46,9 +87,5 @@ public class Snake implements KeyListener{
     @Override
     public void keyReleased(KeyEvent e) {
 
-    }
-
-    public Direzioni getDirezione() {
-        return direzione;
     }
 }

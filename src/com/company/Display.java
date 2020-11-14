@@ -4,32 +4,51 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 
-public class Display extends JFrame {
+public class Display extends JPanel {
 
-    private JPanel pannello;
 
 
     public Display(String title, int width, int height){
 
-        setSize(width, height);
-        setTitle(title);
-
-        pannello = new JPanel();
-        pannello.setBackground(Color.BLACK);
-        add(pannello);
-
-        /*
-         *  questo vederemo più avanti se ha senso
-         *  add(new JPanel()).setBackground(Color.BLACK);;
-         */
-
-        setBackground(new Color(0,0,0));
-        setResizable(false);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
+        setBackground(Color.BLACK);
         setVisible(true);
+        this.getGraphics();
+
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+    }
+
+    /**
+     * utile ma da modificare
+     * @param g
+
+    private void doDrawing(Graphics g) {
+
+        if (inGame) {
+
+            g.drawImage(apple, apple_x, apple_y, this);
+
+            for (int z = 0; z < dots; z++) {
+                if (z == 0) {
+                    g.drawImage(head, x[z], y[z], this);
+                } else {
+                    g.drawImage(ball, x[z], y[z], this);
+                }
+            }
+
+            Toolkit.getDefaultToolkit().sync();
+
+        } else {
+
+            gameOver(g);
+        }
+    }
+     */
+    public void drawCampo(Graphics g, Campo campo){
+
     }
 
 
