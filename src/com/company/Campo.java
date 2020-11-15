@@ -4,8 +4,11 @@ import java.util.Random;
 
 public class Campo {
 
-    private static final int WIDTH = 30;
-    private static final int HEIGHT = 30;
+    private static final int WIDTH = 35;
+    private static final int HEIGHT = 45;
+
+    private int ciboX;
+    private int ciboY;
 
     private Elementi campo[][];
 
@@ -40,6 +43,8 @@ public class Campo {
         }while (el != Elementi.VUOTO);
 
         campo[y][x] = Elementi.CIBO;
+        ciboX = x;
+        ciboY = y;
     }
 
     /**
@@ -74,6 +79,14 @@ public class Campo {
 
     public void setElemento(int x, int y, Elementi el){
         campo[y][x] = el;
+    }
+
+    public int getCiboX(){
+        return ciboX;
+    }
+
+    public int getCiboY(){
+        return ciboY;
     }
 
 

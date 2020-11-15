@@ -5,15 +5,24 @@ import java.awt.*;
 
 public class Main extends JFrame{
 
-    private static Display display;
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+
+    private static final int WIDTH = 525;
+    private static final int HEIGHT = 690;
     private static final String TITLE = "SNAKE!";
+
+
+    private static Snake snake;
+    private static Campo campo;
+    private static Gioco gioco;
+
 
     public Main(){
 
-        display = new Display(TITLE, WIDTH, HEIGHT);
-        add(display);
+        snake = new Snake();
+        campo = new Campo();
+        gioco = new Gioco(campo, snake);
+
+        add(gioco);
 
         setSize(WIDTH, HEIGHT);
         setTitle(TITLE);
@@ -25,6 +34,9 @@ public class Main extends JFrame{
         setLocationRelativeTo(null);
 
         setVisible(true);
+        setFocusable(true);
+
+        gioco.Start();
     }
 
 
@@ -36,6 +48,7 @@ public class Main extends JFrame{
                 JFrame m = new Main();
             }
         });
+
 
     }
 }

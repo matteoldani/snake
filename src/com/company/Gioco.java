@@ -1,41 +1,99 @@
 package com.company;
 
-import java.awt.Point;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Gioco implements Runnable{
+public class Gioco extends JPanel implements Runnable, KeyListener {
 
     private Campo campo;
     private Snake snake;
     private Thread thread;
-    private Display display;
 
-    public Gioco(Campo campo, Snake snake, Display display){
+
+    private Image testa;
+    private Image corpo;
+    private Image cibo;
+    private Image nero;
+
+    private boolean inGioco = true;
+
+    public Gioco(Campo campo, Snake snake){
         this.campo = campo;
         this.snake = snake;
-        this.display = display;
+
+
+        setBackground(Color.BLACK);
+        setVisible(true);
+        setFocusable(true);
+        requestFocus();
+
+
+        /**
+         * carico le immagini che andrò a disegnare
+         */
+        testa = loadImage("img/snake.png");
+        corpo = loadImage("img/corpo.png");
+        cibo = loadImage("img/hamburger.png");
+        nero = loadImage("img/palette.png");
 
         /**
          * la prima volta che istanzio il gioco inserisco lo snake e creo un cibo
          */
         aggiornaCampo();
         campo.creaCibo();
+
+
     }
 
+    private Image loadImage(String path){
+        return new ImageIcon(path).getImage();
+    }
+
+
     public void Start(){
-        thread = new Thread();
-        thread.run();
+        thread = new Thread(this);
+        thread.start();
+
     }
 
     @Override
     public void run() {
-       doMossa();
-       aggiornaCampo();
-       display.drawCampo(display.getGraphics(), campo);
 
-        try {
-            thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while(inGioco){
+            doMossa();
+            aggiornaCampo();
+            repaint();
+
+            try {
+                thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for(int i = 0; i<campo.getWidth(); i++){
+            for (int j = 0; j<campo.getHeight(); j++){
+
+                if(campo.getElemento(i, j) == Elementi.TESTA ){
+                    g.drawImage(testa, i*15, (j*15)+15, this);
+                }
+                if(campo.getElemento(i, j) == Elementi.CORPO ){
+                    g.drawImage(corpo, i*15, (j*15)+15, this);
+                }
+                if(campo.getElemento(i, j) == Elementi.CIBO ){
+                    g.drawImage(cibo, i*15, (j*15)+15, this);
+                }
+                if(campo.getElemento(i, j) == Elementi.VUOTO ){
+                    g.drawImage(nero, i*15, (j*15)+15, this);
+                }
+
+            }
         }
     }
 
@@ -54,6 +112,8 @@ public class Gioco implements Runnable{
                 campo.setElemento(p.x, p.y, Elementi.CORPO);
             }
         }
+
+        campo.setElemento(campo.getCiboX(), campo.getCiboY(), Elementi.CIBO);
     }
 
     /**
@@ -112,8 +172,8 @@ public class Gioco implements Runnable{
             case UP:
                 testa.y--;
 
-                if(testa.x < 0){
-                    testa.x = campo.getHeight() - 1;
+                if(testa.y <  0){
+                    testa.y = campo.getHeight() - 1;
                 }
 
                 if(campo.getElemento(testa.x, testa.y).equals(Elementi.VUOTO)){
@@ -131,8 +191,8 @@ public class Gioco implements Runnable{
             case DOWN:
                 testa.y++;
 
-                if(testa.x >= campo.getHeight()){
-                    testa.x = 0;
+                if(testa.y >= campo.getHeight()){
+                    testa.y = 0;
                 }
 
                 if(campo.getElemento(testa.x, testa.y).equals(Elementi.VUOTO)){
@@ -156,8 +216,23 @@ public class Gioco implements Runnable{
     }
 
     private void gameOver() {
+        inGioco = false;
         thread.interrupt();
     }
 
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println("dsioprv");
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }

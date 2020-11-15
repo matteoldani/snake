@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Snake implements KeyListener{
 
     private int lunghezza = 4;
-    private Direzioni direzione = Direzioni.STOP;
+    private Direzioni direzione = Direzioni.UP;
     private ArrayList<Point> corpo = new ArrayList<Point>();
 
     public Snake(){
@@ -64,6 +64,9 @@ public class Snake implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+        System.out.println("ho cliccato");
+
         int keyCode = e.getKeyCode();
         switch (keyCode){
             case KeyEvent.VK_LEFT:
