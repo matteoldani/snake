@@ -7,7 +7,7 @@ public class Main extends JFrame{
 
 
     private static final int WIDTH = 525;
-    private static final int HEIGHT = 690;
+    private static final int HEIGHT = 670;
     private static final String TITLE = "SNAKE!";
 
 
@@ -23,11 +23,13 @@ public class Main extends JFrame{
         gioco = new Gioco(campo, snake);
 
         add(gioco);
+        addKeyListener(snake);
+        addKeyListener(gioco);
 
         setSize(WIDTH, HEIGHT);
         setTitle(TITLE);
 
-        setBackground(new Color(0,0,0));
+        setBackground(new Color(0, 0,0));
         setResizable(false);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

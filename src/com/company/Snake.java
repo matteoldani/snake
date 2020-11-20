@@ -9,8 +9,9 @@ import java.util.ArrayList;
 public class Snake implements KeyListener{
 
     private int lunghezza = 4;
-    private Direzioni direzione = Direzioni.UP;
+    private Direzioni direzione = Direzioni.STOP;
     private ArrayList<Point> corpo = new ArrayList<Point>();
+    private boolean mossaEffettuata = false;
 
     public Snake(){
         corpo.add(new Point(Campo.getWidth()/2, Campo.getHeight()/2));
@@ -36,6 +37,23 @@ public class Snake implements KeyListener{
         lunghezza++;
     }
 
+    /**
+     * resetta lo stato dello snake quando dal gameover si avvia una nuova partita
+     */
+    public void resetSnake(){
+        lunghezza = 4;
+        direzione = Direzioni.STOP;
+        mossaEffettuata = false;
+
+        corpo.clear();
+
+        corpo.add(new Point(Campo.getWidth()/2, Campo.getHeight()/2));
+        corpo.add(new Point(Campo.getWidth()/2 - 1, Campo.getHeight()/2));
+        corpo.add(new Point(Campo.getWidth()/2 - 2, Campo.getHeight()/2));
+        corpo.add(new Point(Campo.getWidth()/2 - 3, Campo.getHeight()/2));
+
+    }
+
 
     /**
      * restituisce l'elemento della lista in  posizione id
@@ -53,6 +71,10 @@ public class Snake implements KeyListener{
         return lunghezza;
     }
 
+    public void resetMossaEffettuata(){
+        mossaEffettuata = false;
+    }
+
     public Direzioni getDirezione() {
         return direzione;
     }
@@ -65,9 +87,11 @@ public class Snake implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
 
-        System.out.println("ho cliccato");
-
         int keyCode = e.getKeyCode();
+        if(mossaEffettuata){
+            return;
+        }
+        mossaEffettuata = true;
         switch (keyCode){
             case KeyEvent.VK_LEFT:
                 direzione = Direzioni.LEFT;

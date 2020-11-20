@@ -5,7 +5,7 @@ import java.util.Random;
 public class Campo {
 
     private static final int WIDTH = 35;
-    private static final int HEIGHT = 45;
+    private static final int HEIGHT = 43;
 
     private int ciboX;
     private int ciboY;
